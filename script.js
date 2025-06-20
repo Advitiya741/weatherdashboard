@@ -157,24 +157,27 @@ document.addEventListener("DOMContentLoaded", () => {
             }).catch(() => alert(`Failed to fetch coordinates of ${cityName}`));
     }
 
-    function getUserCoordinates(){
-        navigator.geolocation.getCurrentPosition(position => {
-                let {latitude, longitude} = position.coords;
-                let REVERSE_GEOCODING_URL = `https://api.openweathermap.org/geo/1.0/reverse?lat=${latitude}&lon=${longitude}&limit=1&appid=${api_key}`;
+    function getUserCoordinates() {
+    navigator.geolocation.getCurrentPosition(position => {
+        let { latitude, longitude } = position.coords;
+        let REVERSE_GEOCODING_URL = `https://api.openweathermap.org/geo/1.0/reverse?lat=${latitude}&lon=${longitude}&limit=1&appid=${api_key}`;
 
-                fetch(REVERSE_GEOCODING_URL).then(rev => rev.json()).then(data => {
-                    let {name, country, state} = data[0];
-                    getWeatherDetails(name, latitude, longitude, country, state);
-                }).catch(() => {
-                    alert('failed to fetch user coordinates');
-                });
-            }, error => {
-                if(error.code === error.PERMISSION_DENIED){
-                    alert('Geolocation permission denied. Please reset location permission to grant access again');
-                }
-            }
-        )
-    }
+        fetch(REVERSE_GEOCODING_URL)
+            .then(rev => rev.json())
+            .then(data => {
+                let { name, country, state } = data[0];
+                getWeatherDetails(name, latitude, longitude, country, state);
+            })
+            .catch(() => {
+                alert('Failed to fetch user coordinates');
+            });
+    }, error => {
+        if (error.code === error.PERMISSION_DENIED) {
+            alert('Geolocation permission denied. Please reset location permission to grant access again');
+        }
+    });
+}
+
 
     searchBtn.addEventListener('click', getCityCoordinates);
     locationBtn.addEventListener('click', getUserCoordinates);

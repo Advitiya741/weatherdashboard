@@ -256,7 +256,7 @@ hr{
         & h2{
             margin-bottom: 8px;
         }
-        & #city_input, #searchBtn, #locationBtn {
+        & #city_Input, #searchBtn, #locationBtn {
             width: 100%;
             margin-bottom: 10px;
         }
